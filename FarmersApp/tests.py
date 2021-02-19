@@ -14,7 +14,7 @@ class TestsSetUp(APITestCase):
         self.admin_client.credentials(HTTP_AUTHORIZATION='Token ' + self.admin_token.key)
 
 
-class CategoriesTests(TestsSetUp):
+class FarmersAppTests(TestsSetUp):
     '''tests related to categories'''
     def test_authenticated_user_can_add_a_farmer(self):
         response = self.admin_client.post(reverse('list_create_farmer'), {'name': 'testfarmer', 'longitude': 12.23, 'latitude': 34.55})
@@ -36,7 +36,7 @@ class CategoriesTests(TestsSetUp):
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual('new farmer name', response.data['name'])
 
-    def test_admin_can_delete_a_category(self):
+    def test_authenticated_user_can_delete_a_farmer(self):
         mommy.make(models.Farmer)
         response = self.admin_client.delete(reverse('get_edit_delete_farmer', kwargs={'pk': 1}))
         self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
