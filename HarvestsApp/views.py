@@ -22,7 +22,7 @@ class HarvestGetEditDeleteView(generics.RetrieveUpdateDestroyAPIView):
 
 
 class HarvestPhotoListCreateView(generics.ListCreateAPIView):
-    serializer_class = serializers.HarvestPhotos
+    serializer_class = serializers.HarvestPhotosSerializer(many=True)
     queryset = models.HarvestPhotos.objects.all()
 
     def perform_create(self, serializer):
@@ -31,7 +31,7 @@ class HarvestPhotoListCreateView(generics.ListCreateAPIView):
 
 class HarvestPhotoGetEditDeleteView(generics.RetrieveUpdateDestroyAPIView):
     permission_classes = (permissions.IsAuthenticated,)
-    serializer_class = serializers.HarvestPhotos
+    serializer_class = serializers.HarvestPhotosSerializer
     queryset = models.HarvestPhotos.objects.all()
 
     def perform_update(self, serializer):
