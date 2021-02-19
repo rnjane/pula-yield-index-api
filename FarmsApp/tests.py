@@ -13,8 +13,9 @@ class TestsSetUp(APITestCase):
         self.admin_token = Token.objects.create(user=User.objects.create_superuser(username='testadminuser', email='testadmin@test.com'))
         self.admin_client = APIClient()
         self.admin_client.credentials(HTTP_AUTHORIZATION='Token ' + self.admin_token.key)
-        self.test_farmer = mommy.make(Farmer)
-
+        self.admin_client.post(reverse('list_create_farmer'), {'name': 'testfarmer', 'longitude': 12.23, 'latitude': 34.55})
+        self.test_farmer = Farmer.objects.filter(name='testfarmer').first()
+        self.test_farm = self.admin_client.post(reverse('list_create_farm'), {'farm_owner': self.test_farmer.id, 'farm_size': 12.23, 'crop_grown': 'Maize'})
 
 class FarmsAppTests(TestsSetUp):
     '''tests related to categories'''
@@ -32,13 +33,11 @@ class FarmsAppTests(TestsSetUp):
         self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
 
     def test_aauthenticated_user_can_edit_a_farm_details(self):
-        mommy.make(models.Farm)
         response = self.admin_client.patch(reverse('get_edit_delete_farm', kwargs={'pk': 1}), {'farm_size': 45.34})
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(45.34, response.data['farm_size'])
 
     def test_authenticated_user_can_delete_a_farm(self):
-        mommy.make(models.Farm)
         response = self.admin_client.delete(reverse('get_edit_delete_farm', kwargs={'pk': 1}))
         self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
         self.assertEqual(response.data, None)
