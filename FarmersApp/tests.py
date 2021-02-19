@@ -17,7 +17,6 @@ class TestsSetUp(APITestCase):
 
 
 class FarmersAppTests(TestsSetUp):
-    '''tests related to categories'''
     def test_authenticated_user_can_add_a_farmer(self):
         response = self.client.post(reverse('list_create_farmer'), {'name': 'testfarmer', 'longitude': 12.23, 'latitude': 34.55})
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
