@@ -19,4 +19,4 @@ class Farm(models.Model):
     modified_by = models.ForeignKey(User, related_name='farm_updated_by', on_delete=models.CASCADE, default=None)
 
     def __str__(self):
-        return self.farm_owner + "'s" + self.crop_grown + "farm"
+        return self.farm_owner.name + "'s " + self.crop_grown + " farm"
