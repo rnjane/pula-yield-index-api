@@ -42,7 +42,8 @@ INSTALLED_APPS = [
     'AuthenticationApp',
     'FarmersApp',
     'FarmsApp',
-    'HarvestsApp'
+    'HarvestsApp',
+    'FlaggedItemsApp'
 ]
 
 REST_FRAMEWORK = {

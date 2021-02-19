@@ -18,8 +18,3 @@ class HarvestSerializer(serializers.ModelSerializer):
         model = Harvest
         fields = ['farm', 'harvest_wet_weight', 'harvest_dry_weight', 'date_created', 'date_updated', 'created_by', 'modified_by']
         extra_kwargs = {"created_by": {"read_only": True}, "modified_by": {"read_only": True}}
-
-    def validate(self, data):
-        if data['harvest_dry_weight'] > data['harvest_wet_weight']:
-            raise ValidationError("Dry weight can not be more than wet weight.")
-        return data

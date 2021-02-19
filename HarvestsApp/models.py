@@ -4,7 +4,7 @@ from AuthenticationApp.models import User
 
 
 class Harvest(models.Model):
-    farm = models.OneToOneField(Farm, related_name='harvest', on_delete=models.CASCADE)
+    farm = models.ForeignKey(Farm, related_name='harvest', on_delete=models.CASCADE)
     harvest_wet_weight = models.FloatField()
     harvest_dry_weight = models.FloatField()
     date_created = models.DateTimeField(auto_now_add=True)
