@@ -12,6 +12,10 @@ class Harvest(models.Model):
     created_by = models.ForeignKey(User, related_name='harvest_created_by', on_delete=models.CASCADE, default=None)
     modified_by = models.ForeignKey(User, related_name='harvest_updated_by', on_delete=models.CASCADE, default=None)
 
+    @property
+    def harvest_name(self):
+        return self.farm.farm_name + " Harvest"
+
 
 class HarvestPhotos(models.Model):
     belongs_to = models.ForeignKey(Harvest, related_name='harvest_photo', on_delete=models.CASCADE, default=None, null=True)
