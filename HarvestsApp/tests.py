@@ -12,16 +12,6 @@ from HarvestsApp.models import Harvest, HarvestPhotos
 from FarmsApp.models import Farm
 from FarmersApp.models import Farmer
 
-'''
-    farm = models.ForeignKey(Farm, related_name='harvest', on_delete=models.CASCADE)
-    harvest_wet_weight = models.FloatField()
-    harvest_dry_weight = models.FloatField()
-    date_created = models.DateTimeField(auto_now_add=True)
-    date_updated = models.DateTimeField(auto_now=True)
-    created_by = models.ForeignKey(User, related_name='farm_created_by', on_delete=models.CASCADE, default=None)
-    modified_by = models.ForeignKey(User, related_name='farm_updated_by', on_delete=models.CASCADE, default=None)
-'''
-
 class TestsSetUp(APITestCase):
     def get_temporary_image(self):
         '''create a temporary image for testing purposes'''
