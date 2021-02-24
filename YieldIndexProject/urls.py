@@ -21,5 +21,6 @@ urlpatterns = [
     path('', include('AuthenticationApp.urls')),
     path('', include('FarmersApp.urls')),
     path('', include('FarmsApp.urls')),
-    path('', include('HarvestsApp.urls'))
+    path('', include('HarvestsApp.urls')),
+    path('', include('FlaggedItemsApp.urls'))
 ]
