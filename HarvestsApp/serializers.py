@@ -7,20 +7,19 @@ from .models import Harvest, HarvestPhotos
 
 
 class HarvestPhotosSerializer(serializers.ModelSerializer):
-    # image = serializers.ListField(
-    #             child=serializers.FileField( max_length=100000,
-    #                                      allow_empty_file=False,
-    #                                     use_url=True ))
     class Meta:
         model = HarvestPhotos
         fields = ['belongs_to', 'image', 'date_created', 'date_updated', 'created_by', 'modified_by']
         extra_kwargs = {"created_by": {"read_only": True}, "modified_by": {"read_only": True}}
 
-    # def create(self, validated_data):
-    #     image=validated_data.pop('image')
-    #     for img in image:
-    #         photo=HarvestPhotos.objects.create(image=img,**validated_data)
-    #     return photo
+    
+    def create(self, validated_data):
+        images_data = self.context.get('request').data.pop('image')
+
+        for image_data in images_data:
+            image, _ = HarvestPhotos.objects.get_or_create(image=image_data, created_by=self.context.get('request').user, modified_by=self.context.get('request').user)
+
+        return image
 
 
 class HarvestSerializer(serializers.ModelSerializer):
