@@ -35,11 +35,7 @@ export default {
         errors: '',
     };
   },
-  // beforeUpdate() {
-  //   if (this.bucketlists.length < 1 && this.count > 0) {
-  //     this.getBucketlists();
-  //   }
-  // },
+
   methods: {
     async loginUser() {
       let response;

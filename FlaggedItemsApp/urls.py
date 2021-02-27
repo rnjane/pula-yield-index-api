@@ -5,5 +5,5 @@ from django.conf import settings
 from . import views
 
 urlpatterns = [
-    path('flagged-item', views.FlaggedItemListCreateView.as_view(), name='flagged_item'),
+    path('dashboard', views.get_harvests_statistics, name='dashboard'),
 ]

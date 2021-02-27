@@ -1,5 +1,62 @@
 <template>
   <div class="products">
+    <h3>Harvests Dashboard</h3>
+    <div class="card">
+      <div class="card-header">
+        Harvests Statistics
+      </div>
+      <div class="card-body">
+        <div class="table-responsive">
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th scope="col">
+                  Id
+                </th>
+                <th>
+                  Reason
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>
+                  Record Count
+                </td>
+                <td>
+                  {{harvest_records_count}}
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  Average wet Weight yields
+                </td>
+                <td>
+                  {{average_wet_weight_yields}}
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  Average dry Weight yields
+                </td>
+                <td>
+                  {{average_dry_weight_yields}}
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  Number of flagged records
+                </td>
+                <td>
+                  {{number_of_flagged_items}}
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
     <h3>Flagged Items</h3>
     <div class="card mt-5">
       <div class="card-header">
@@ -7,7 +64,7 @@
       </div>
       <div class="card-body">
         <div class="table-responsive">
-          <table class="table">
+          <table class="table table-bordered">
             <thead>
               <tr>
                 <th scope="col">
@@ -43,7 +100,11 @@ export default {
   name: 'Dashboard',
     data () {
       return {
-        reasons: []
+        reasons: [],
+        harvest_records_count: 0,
+        average_wet_weight_yields: 0,
+        average_dry_weight_yields: 0,
+        number_of_flagged_items: 0
       }
   },
   created() {
@@ -52,9 +113,13 @@ export default {
 
   methods: {
     async getReasons() {
-      const response = await axios.get(`${db.BASE_URL}/flagged-item`,
+      const response = await axios.get(`${db.BASE_URL}/dashboard`,
         { headers: db.headers });
-      this.reasons = response.data;
+      this.reasons = response.data.flagged_items;
+      this.harvest_records_count = response.data.harvest_records_count;
+      this.average_wet_weight_yields = response.data.average_wet_weight_yields[0];
+      this.average_dry_weight_yields = response.data.average_dry_weight_yields[0];
+      this.number_of_flagged_items = response.data.number_of_flagged_items;
       return response;
     }
   },
