@@ -51,6 +51,22 @@
                   {{number_of_flagged_items}}
                 </td>
               </tr>
+              <tr>
+                <td>
+                  Dry Weight Outliers
+                </td>
+                <td>
+                  {{dry_weight_outliers}}
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  Wet Weight Outliers
+                </td>
+                <td>
+                  {{wet_weight_outliers}}
+                </td>
+              </tr>
             </tbody>
           </table>
         </div>
@@ -104,7 +120,9 @@ export default {
         harvest_records_count: 0,
         average_wet_weight_yields: 0,
         average_dry_weight_yields: 0,
-        number_of_flagged_items: 0
+        number_of_flagged_items: 0,
+        dry_weight_outliers: [],
+        wet_weight_outliers: []
       }
   },
   created() {
@@ -120,6 +138,8 @@ export default {
       this.average_wet_weight_yields = response.data.average_wet_weight_yields[0];
       this.average_dry_weight_yields = response.data.average_dry_weight_yields[0];
       this.number_of_flagged_items = response.data.number_of_flagged_items;
+      this.dry_weight_outliers = response.data.dry_weight_outliers;
+      this.wet_weight_outliers = response.data.wet_weight_outliers;
       return response;
     }
   },
