@@ -98,6 +98,10 @@
 <script>
 import axios from 'axios';
 import db from '@/db'
+import Vue from 'vue';
+import VueToast from 'vue-toast-notification';
+import 'vue-toast-notification/dist/theme-sugar.css';
+Vue.use(VueToast);
 export default {
   name: 'Farmers',
     data () {
@@ -131,10 +135,16 @@ export default {
       return response;
     },
     async addFarmer() {
-      const data = { name: this.farmerData.farmer_name, latitude: this.farmerData.farmer_latitude, longitude: this.farmerData.farmer_longitude };
-      const response = await axios.post(`${db.BASE_URL}/farmer`,
-        data, { headers: db.headers });
-      this.farmers.unshift(response.data);
+      let response;
+      try{
+        const data = { name: this.farmerData.farmer_name, latitude: this.farmerData.farmer_latitude, longitude: this.farmerData.farmer_longitude };
+        const response = await axios.post(`${db.BASE_URL}/farmer`,
+          data, { headers: db.headers });
+        Vue.$toast.success("Farmer Added Succesfully");
+        this.farmers.unshift(response.data);
+      } catch(error) {
+        Vue.$toast.error("Enter valid data");
+      }
       return response;
     },
     onEdit(farmer){

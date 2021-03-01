@@ -125,6 +125,10 @@
 <script>
 import axios from 'axios';
 import db from '@/db'
+import Vue from 'vue';
+import VueToast from 'vue-toast-notification';
+import 'vue-toast-notification/dist/theme-sugar.css';
+Vue.use(VueToast);
 export default {
   name: 'Farms',
   data () {
@@ -173,10 +177,16 @@ export default {
       return response;
     },
     async addFarm() {
-      const data = { farm_owner: this.farmData.farm_owner, farm_size: this.farmData.farm_size, farm_size_units: this.farmData.farm_size_units, crop_grown: this.farmData.crop_grown };
-      const response = await axios.post(`${db.BASE_URL}/farm`,
-        data, { headers: db.headers });
-      this.farms.unshift(response.data);
+      let response;
+      try {
+        const data = { farm_owner: this.farmData.farm_owner, farm_size: this.farmData.farm_size, farm_size_units: this.farmData.farm_size_units, crop_grown: this.farmData.crop_grown };
+        const response = await axios.post(`${db.BASE_URL}/farm`,
+          data, { headers: db.headers });
+        Vue.$toast.success("Farm Added Succesfully");
+        this.farms.unshift(response.data);
+      } catch(error) {
+        Vue.$toast.error("Enter valid data");
+      }
       return response;
     },
     onEdit(farm){
