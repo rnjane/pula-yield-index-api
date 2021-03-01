@@ -110,6 +110,10 @@
 <script>
 import axios from 'axios';
 import db from '@/db'
+import Vue from 'vue';
+import VueToast from 'vue-toast-notification';
+import 'vue-toast-notification/dist/theme-sugar.css';
+Vue.use(VueToast);
 export default {
   name: 'Harvests',
   data () {
@@ -170,12 +174,17 @@ export default {
 
     },
     async addHarvest() {
-      const data = { farm: this.harvestData.harvest_farm, harvest_wet_weight: this.harvestData.harvest_wet_weight, harvest_dry_weight: this.harvestData.harvest_dry_weight };
-      const response = await axios.post(`${db.BASE_URL}/harvest`,
-        data, { headers: db.headers });
-      // this.image.append('belongs_to', response.data.id)
-      this.uploadImage()
-      this.harvests.unshift(response.data);
+      let response;
+      try {
+        const data = { farm: this.harvestData.harvest_farm, harvest_wet_weight: this.harvestData.harvest_wet_weight, harvest_dry_weight: this.harvestData.harvest_dry_weight };
+        const response = await axios.post(`${db.BASE_URL}/harvest`,
+          data, { headers: db.headers });
+        // this.image.append('belongs_to', response.data.id)
+        this.uploadImage()
+        this.harvests.unshift(response.data);
+      } catch(error){
+        Vue.$toast.error("Enter valid data");
+      }
       return response;
     },
     onEdit(harvest){
